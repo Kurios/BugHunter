@@ -28,10 +28,26 @@ block content
     #backgroundContainer.svg-container
        #background.svg
     #b.main
-      h1= 	  title
-      p 	  #{activePlayers} Bugs remain in the system
-      br
-      p System Updates:
-      br
-      p 
-        a(href='admin') ADMIN ONLY
+      h1= 'Bug Hunter Registration'
+      p=  'Congradulations, you have been tasked with removing targeted "bugs" in the system with extreme and due force. Please provide us your contact information so we can provide you live updates on the "source" of the bug that requires "fixing."'
+        br
+        form(action="register", method="post")
+          table
+           tr
+            td
+             Your Full Name
+            td
+             input(type="text" name="name")
+           tr
+            td
+             Your Location (X.X.XXX format)
+            td
+             input(type="text" name="location")
+           tr
+            td
+             Your Email
+            td
+             input(type="text" name="email")
+           tr
+            td
+             input(type="submit" value="submit")

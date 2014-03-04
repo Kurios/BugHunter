@@ -1,8 +1,37 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Couruer New", monospace;
+  background-color:#000011;
+  color: #E0FFE0;
 }
 
 a {
   color: #00B7FF;
+}
+div{
+  z-index : 1;
+}
+.main {
+	position : absolute;
+	top : 0;
+	left : 10;
+}
+.svg-container {
+	display : inline-block;
+	position : relitive;
+	width : 100%;
+	height : 100%;
+	vertical-align : middle;
+	fill : #335C33;
+	font : 20px "Impact", monospace;
+	font-weight: bold;
+	z-index : -1;
+}
+
+.svg{
+	display : block;
+	position : absolute;
+	top : 0;
+	left : 0;
+	width : 100% ;
 }

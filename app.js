@@ -6,11 +6,17 @@
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
+var admin = require('./routes/admin');
+var register = require('./routes/register');
+Assasin = require('./Assasin');
 var http = require('http');
 var path = require('path');
 
 var app = express();
 
+//globals
+assasins = [];
+registered = true;
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -30,6 +36,10 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/register', register.index);
+app.get('/admin', admin.admin);
+app.post('/register', register.index);
+app.post('/admin', admin.admin);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

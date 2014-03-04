@@ -7,7 +7,7 @@
  * The current target of this assassin mark: Who's trying to kill off this
  * assassin status: "UnInit" //Not in use now "Alive" "Dead"
  */
-public function Assasin(name,location,email,target,mark,nickname,id,status) {
+function Assasin(name,location,email,target,mark,nickname,id,status) {
 	this.name = name;
 	this.location = location;
 	this.email = email;
@@ -47,6 +47,7 @@ Assasin.prototype.kill = function (target){
 		// pop 2 (whos the mark) as 3 killed 2.
 		//
 		// 1> 3 > 4
+		target.mark = this.id;
 	}
 };
 
@@ -54,27 +55,44 @@ Assasin.prototype.kill = function (target){
  * TODO: A call to generate a random nick name
  * 
  */
-public function generateNickName(name)
+function generateNickName(name)
 {
-	return "Zero";
+	return nicknames.splice(Math.round(Math.random()*nicknames.length),1)[0];
 }
 
+//Nickname library:
+
+nicknames = [];
+
+var fs = require('fs');
+fs.readFile('./corePrograms.txt',{encoding:"ascii"},function(err,data){
+	if(err) throw err;
+	//return;
+	var words = data.split('\n');
+	console.log("Nicknames loaded");
+	exports.loaded = true;
+	nicknames = words;
+});
 /**
  * TODO: Generate a unique nick id
  */
-public function generateID()
+function generateID()
 {
 	return 0;
 }
 
-
-public function generateHits(assasins,distanceFunction)th
+/**
+ * 
+ */
+function generateHits(assasins,distanceFunction)
 {
-	var distances
+	var distances //
 }
 
-public function hameltonGraph(graph)
+function hameltonGraph(graph)
 {
 	
 }
+
+module.exports = Assasin;
 
