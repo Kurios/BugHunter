@@ -3,6 +3,11 @@
 ## Objective
 
 
+User self-sign-up and administrative functions for conducting the "assassination" game:
+ - gather information from game participants (self-sign-up)
+ - pair up the players with their targets
+ - record assassinations, re-link players to new targets
+
 
 ## Usage
 
