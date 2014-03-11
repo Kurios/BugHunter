@@ -35,6 +35,7 @@ function Assasin(name,location,email,target,mark,nickname,id,status) {
  * target : Assasin to kill off
  */
 Assasin.prototype.kill = function (target){
+	target.status="Dead"
 	if(this.target == target.id ) // emails are unique
 		this.target = target.target;
 	else if(this.mark == target.id)
@@ -76,9 +77,12 @@ fs.readFile('./corePrograms.txt',{encoding:"ascii"},function(err,data){
 /**
  * TODO: Generate a unique nick id
  */
+
+ var maxID = 1000;
 function generateID()
 {
-	return 0;
+	maxID++;
+	return maxID;
 }
 
 /**

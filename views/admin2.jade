@@ -1,0 +1,35 @@
+extends layout
+block content
+
+  form(action="admin", method="post")
+    table
+      tr
+        td Username
+        td
+          input(type="text", value="#{User.name}", name="name")
+      tr
+        td Location
+        td 
+          input(type="text", value="#{User.location}", name="location")
+      tr
+        td Email
+        td
+          input(type="text", value="#{User.email}", name="email") 
+      tr
+        td Target
+        td
+          input(type="text", value="#{User.target}", name="target")
+      tr
+        td Nickname
+        td
+          input(type="text", value="#{User.nickname}", name="nickname")
+      tr
+        td Status
+        td
+          input(type="text", value="#{User.status}", name="status")
+      tr
+        td
+        td
+          input(type="hidden", value="Update", name="action")
+          input(type="hidden", value="#{User.id}", name="id")
+          input(type="submit", value="update")

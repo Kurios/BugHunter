@@ -1,0 +1,31 @@
+extends layout
+block content
+
+  div
+    table
+      thead
+        tr: th ID
+          th Name
+          th Location
+          th Email
+          th TargetID
+          th NickName
+          th Status
+      tbody
+        each user, i in Assasins
+          tr
+            td 
+              a(href='/admin?id=' + user.id) #{user.id} 
+            td #{user.name} 
+            td #{user.location} 
+            td #{user.email} 
+            td #{user.target} 
+            td #{user.nickname} 
+            td #{user.status}
+            td
+              form(action="admin", method="post")
+                input(type="hidden", value="#{user.id}", name="id")
+                input(type="hidden", value="kill", name="action")
+                input(type="submit", value="Kill")
+                i Target Number 
+                input(type="text", name="targetID")
