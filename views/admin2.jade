@@ -29,7 +29,8 @@ block content
           input(type="text", value="#{User.status}", name="status")
       tr
         td
-        td
           input(type="hidden", value="Update", name="action")
           input(type="hidden", value="#{User.id}", name="id")
           input(type="submit", value="update")
+        td
+          a(href="admin") Back

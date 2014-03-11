@@ -13,19 +13,26 @@ block content
           th Status
       tbody
         each user, i in Assasins
-          tr
+          tr(class = "#{user.status}")
             td 
-              a(href='/admin?id=' + user.id) #{user.id} 
-            td #{user.name} 
+                a(href='/admin?id=' + user.id) #{user.id} 
+            td 
+              if (user.status == "Dead")
+                strike #{user.name}
+              else 
+                b #{user.name}
             td #{user.location} 
             td #{user.email} 
             td #{user.target} 
             td #{user.nickname} 
             td #{user.status}
             td
-              form(action="admin", method="post")
-                input(type="hidden", value="#{user.id}", name="id")
-                input(type="hidden", value="kill", name="action")
-                input(type="submit", value="Kill")
-                i Target Number 
-                input(type="text", name="targetID")
+                form(action="admin", method="post")
+                  input(type="hidden", value="#{user.id}", name="id")
+                  input(type="hidden", value="Kill", name="action")
+                  if (user.status == "Dead")
+                    input(type="submit", value="Kill", disabled="true")
+                  else
+                    input(type="submit", value="Kill")
+                  i Target Number 
+                  input(type="text", name="targetID")

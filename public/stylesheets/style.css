@@ -5,6 +5,10 @@ body {
   color: #E0FFE0;
 }
 
+.Dead {
+	color: #CC0000;
+}
+
 a {
   color: #00B7FF;
 }

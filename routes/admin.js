@@ -32,6 +32,7 @@ exports.admin = function(req, res){
 				res.render('admin', { title: 'Bug Squasher : Admin' , activePlayers: 20, Assasins:assasins});
 			}else{
 				user.kill(user2);
+				res.render('admin', { title: 'Bug Squasher : Admin' , activePlayers: 20, Assasins:assasins});
 			}
 		}
 	}else if(req.query['id'] != null ){
