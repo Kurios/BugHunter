@@ -9,7 +9,7 @@ exports.index = function(req, res){
 		    req.body.lastRun = Number(req.body.nextRun) + new Date().getTime();
 		    var assasin = new Assasin(req.body.name,req.body.location,req.body.email);
 		    var nick = assasin.nickname;
-		    assasins.push(assasin);
+		    assasins[assasin.id] = assasin;
 		    var ret = { title: 'Bug Squasher Registration' , activePlayers: 20, name:req.body.name, nick:nick};
 		    console.log(ret);
 		    res.render('register2', ret);

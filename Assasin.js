@@ -52,6 +52,24 @@ Assasin.prototype.kill = function (target){
 	}
 };
 
+Assasin.prototype.getTarget = function (assasins)
+{
+	return assasins[this.target];
+}
+Assasin.prototype.distance = function(target)
+{
+	var ret = 0;
+	//Split the location vector into its components.
+	tlocation = target.location.split(".");
+	mlocation = this.location.split(".");
+	//Floor Dif
+	ret += Math.abs(tlocation[1] - mlocation[1]) * 400;
+	//Location Difference. This one's harder. We have a max difference of ~200 in number, and we number 100->500
+	ret += Math.abs(tlocation[1] - mlocation[1]) % 200; //I think
+	ret += Math.random() * 100;
+	return ret;
+}
+
 /**
  * TODO: A call to generate a random nick name
  * 
@@ -88,15 +106,88 @@ function generateID()
 /**
  * 
  */
-function generateHits(assasins,distanceFunction)
+Assasin.generateHits = function(assasins)
 {
-	var distances //
+	function removeInside(array,value)
+	{
+		var tar = undefined;
+		for(i in array){
+			if(array[i] == value){
+				tar = i;
+				break;
+			}
+		}
+		if(tar) array.split(i,1);
+	}
+	//Populate Distance Vector
+	graph = [];
+	var distances = [];
+	for (var x in assasins){
+		distances[x] = []
+		for(var y in assasins){
+			var dist = [];
+			dist = assasins[x].distance(assasins[y]);
+			dist.user = y;
+			distances[x][y] = dist;
+		}
+		graph.push([x]);
+	}
+	//Reduce Graphs slowly, till you have only one.
+	//We do so under the theory of the longest road. Or something. I just like that name
+	var roadLength = 0;
+	var finalGraph = [];
+	if(graph.length == 0) return null; //Do nothing
+	if(graph.length == 1) return null; //Do nothing
+
+	var index = 0;
+	var subindex = 0;
+	var subsegmentDistance = 0;
+
+	//Find the length we care about;
+	var user1 = graph.pop();
+	var user2 = graph.pop();
+	finalGraph[user1] = [];
+	finalGraph[user2] = [];
+	finalGraph[user1].target = user2;
+	finalGraph[user1].distance = distances[user1][user2];
+	finalGraph[user2].target = user1;
+	finalGraph[user2].distance = distances[user1][user2];
+
+
+	roadLength = subsegmentDistance * 2;
+
+
+	console.log("Starting to generate graph\n");
+	//First two are constructed, lets keep adding...
+	while(graph.length > 0){
+		console.log("\t"+graph.length+" to go...\n");
+		var u1 = 0;
+		var u2 = 0;
+		var delta = Number.MIN_VALUE;
+		var user = graph.pop();
+		//pick a target injection point
+		for(t1 in finalGraph){
+			if(delta < (distances[user][t1] + distances[user][finalGraph[t1].target] - finalGraph[t1].distance)){
+				u1 = t1;
+				u2 = finalGraph[t1].target;
+				delta = (distances[user][t1] + distances[user][finalGraph[t1].target] - finalGraph[t1].distance);
+			}
+		}
+		//Inject
+		finalGraph[user] = [];
+		finalGraph[u1].target = user;
+		finalGraph[user].target = u2;
+		finalGraph[u1].distance = distances[user][u1];
+		finalGraph[user].distance = distances[user][u2];
+	}
+	//And apply to our assasins
+	for(user in finalGraph)
+	{
+		assasins[user].target = assasins[finalGraph[user].target].id
+	}
+	//Finished
 }
 
-function hameltonGraph(graph)
-{
-	
-}
 
 module.exports = Assasin;
 

@@ -2,6 +2,10 @@ extends layout
 block content
 
   div
+    if(Killed != undefined)
+      div TODO: Send some mail!!! 
+        a(href="mailto:#{Killer.email}?Subject=You have a new Target?Body=Your new target is #{Assasins[Killer.target].nickname}. The root of the problem can be found at #{Assasins[Killer.target].location}") Killer's Email
+        a(href="mailto:#{Killed.email}?Subject=You've been killed") Killed's Email
     table
       thead
         tr: th ID
@@ -12,27 +16,32 @@ block content
           th NickName
           th Status
       tbody
-        each user, i in Assasins
-          tr(class = "#{user.status}")
-            td 
-                a(href='/admin?id=' + user.id) #{user.id} 
-            td 
-              if (user.status == "Dead")
-                strike #{user.name}
-              else 
-                b #{user.name}
-            td #{user.location} 
-            td #{user.email} 
-            td #{user.target} 
-            td #{user.nickname} 
-            td #{user.status}
-            td
-                form(action="admin", method="post")
-                  input(type="hidden", value="#{user.id}", name="id")
-                  input(type="hidden", value="Kill", name="action")
-                  if (user.status == "Dead")
-                    input(type="submit", value="Kill", disabled="true")
-                  else
-                    input(type="submit", value="Kill")
-                  i Target Number 
-                  input(type="text", name="targetID")
+        each i,user in Assasins
+          if(Assasins[user])
+            tr(class = "#{Assasins[user].status}")
+              td 
+                  a(href='/admin?id=' + Assasins[user].id) #{Assasins[user].id} 
+              td 
+                if (Assasins[user].status == "Dead")
+                  strike #{Assasins[user].name}
+                else 
+                  b #{Assasins[user].name}
+              td #{Assasins[user].location} 
+              td #{Assasins[user].email} 
+              td #{Assasins[user].target} 
+              td #{Assasins[user].nickname} 
+              td #{Assasins[user].status}
+              td
+                  form(action="admin", method="post")
+                    input(type="hidden", value="#{Assasins[user].id}", name="id")
+                    input(type="hidden", value="Kill", name="action")
+                    if (Assasins[user].status == "Dead")
+                      input(type="submit", value="Kill", disabled="true")
+                    else
+                      input(type="submit", value="Kill")
+                    i Target Number 
+                    input(type="text", name="targetID")
+    form(action="admin", method="post")
+      input(type="hidden", name="action", value="Pair")
+      input(type="hidden", name="id",value="#{Assasins.slice(-1)[0].id}" )
+      input(type="submit", value="Pair Users")

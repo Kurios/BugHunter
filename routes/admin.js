@@ -1,6 +1,7 @@
 /**
  * New node file
  */
+Assasin = require('../Assasin');
 
 exports.admin = function(req, res){
 	console.log(req.body);
@@ -11,7 +12,11 @@ exports.admin = function(req, res){
 			if(assasins[i].id == req.body['id'])
 				user = assasins[i];
 		}
-		if(user === null){
+		if(req.body['action'] == "Pair"){
+			console.log("Entering Pairing\n");
+			Assasin.generateHits(assasins);
+			res.render('admin', { title: 'Bug Squasher : Admin' , activePlayers: 20, Assasins:assasins});
+		}else if(user === null){
 			console.log("user not found")
 			res.render('admin', { title: 'Bug Squasher : Admin' , activePlayers: 20, Assasins:assasins});
 		}else if(req.body['action'] == "Update"){
@@ -23,6 +28,7 @@ exports.admin = function(req, res){
 			user.status = req.body["status"];
 			res.render('admin2', { title: 'Bug Squasher : Admin' , User:user});
 		}else if(req.body['action'] == "Kill"){
+			console.log("Killing " + user.name +"\n")
 			var user2 = null;
 			for(var i in assasins){
 				if(assasins[i].id == req.body['targetID'])
@@ -32,7 +38,7 @@ exports.admin = function(req, res){
 				res.render('admin', { title: 'Bug Squasher : Admin' , activePlayers: 20, Assasins:assasins});
 			}else{
 				user.kill(user2);
-				res.render('admin', { title: 'Bug Squasher : Admin' , activePlayers: 20, Assasins:assasins});
+				res.render('admin', { title: 'Bug Squasher : Admin' , activePlayers: 20, Assasins:assasins, Killer:user, Killed:user2});
 			}
 		}
 	}else if(req.query['id'] != null ){
